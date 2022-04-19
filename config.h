@@ -11,7 +11,7 @@ static const unsigned int panel[] = {20, 20, 20, 20}; //positions: 0-top panel, 
 static const unsigned int borderpx  = 3;        		 	/* border pixel of windows */
 static const unsigned int gappx     = 3;        			/* gaps between windows */
 static const unsigned int snap      = 0;       				/* snap pixel */
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >1: pin systray to monitor X */
+static const unsigned int systraypinning = 1;   /* 0: sloppy systray follows selected monitor, >1: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
@@ -21,8 +21,8 @@ static const int topbar             = 1;        			/* 0 means bottom bar */
 static const int vertpad              = 0;       				/* vertical padding of bar */
 static const int sidepad            = 0;       				/* horizontal padding of bar */
 static const int horizpadbar        = 15;        			/* horizontal padding for statusbar */
-static const int vertpadbar         = 15;        			/* vertical padding for statusbar */
-static const char *fonts[]          = {  "SF Mono:size=11", "TerminessTTF Nerd Font:size=14", };
+static const int vertpadbar         = 11;        			/* vertical padding for statusbar */
+static const char *fonts[]          = {  "SF Mono:size=12:style=regular", "Symbols Nerd Font Mono:size=13", "Noto Sans Runic:size=14" };
 static const char dmenufont[]       = "SF Mono:size=12";
 static const char col_gray1[]       = "#161616";
 static const char col_gray2[]       = "#3B3A43";
@@ -39,7 +39,7 @@ static const char *colors[][3]      = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* tagging */
-static const char *tags[] = { "   " , " ₂  ", " ₃  ", " ₄  ", " ₅  ", " ₆  ", " ₇  ", " "};
+static const char *tags[] = { "  " , " ²  ", " ³  ", " ⁴  ", " ⁵  ", " ⁶  ", " ⁷  ", " ⁷ "};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -59,19 +59,19 @@ static const Rule rules[] = {
 	{ "Plexamp", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "Conky-manager", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "Steam", 	  	NULL,       NULL,     1 << 4,       			1,           -1 },
-	{ "Minecraft Launcher", 	  	NULL,       NULL,     1 << 3,       			1,           0 },
-	{ "Minecraft 1.18.2", 	  	NULL,       NULL,     1 << 3,       			0,           0 },
+	{ "Minecraft Launcher", 	  	NULL,       NULL,     1 << 4,       			1,           0 },
+	{ "Minecraft 1.18.2", 	  	NULL,       NULL,     1 << 4,       			0,           0 },
 	{ "Minecraft", 	  	NULL,       NULL,     1 << 3,       			0,           0 },
 	{ "Sxiv", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "inkdrop", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "Sysmontask", 	  	NULL,       NULL,       0,       			1,           -1 },
-	{ "plexmediaplayer", 	  	NULL,       NULL,     1 << 6,       			1,           0 },
+	{ "plexmediaplayer", 	  	NULL,       NULL,     ~0,       			1,           0 },
 	{ "Brave",    NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "code-oss", NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "discord",  NULL,       NULL,       1 << 4,       1,           -1 },
-	{ "Signal",   NULL,       NULL,      	1 << 4,       1,           -1 },
-	{ "Caprine",   NULL,       NULL,      	1 << 4,       1,           -1 },
-	{ "mail",   	NULL,       NULL,      	1 << 4,       0,           -1 },
+	{ "discord",  NULL,       NULL,       1 << 3,       1,           -1 },
+	{ "Signal",   NULL,       NULL,      	1 << 3,       1,           -1 },
+	{ "Caprine",   NULL,       NULL,      	1 << 3,       1,           -1 },
+	{ "mail",   	NULL,       NULL,      	1 << 3,       0,           -1 },
 	{ "kitty",   	NULL,       NULL,      	0, 			      0,           1 },
 };
 
@@ -82,11 +82,11 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "|M|",      centeredmaster }, /* first entry is default */
-	{ ">M>",      centeredfloatingmaster },
-	{ "[]=",      tile },
-	{ "><>",      NULL }, /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "ᛁᛗᛁ",      centeredmaster }, /* first entry is default */
+	{ "᛬ᛗ᛬",      centeredfloatingmaster },
+	{ "ᛏ",      tile },
+	{ "ᛟ",      NULL }, /* no layout function means floating behavior */
+	{ "ᛋ",      monocle },
 };
 
 /* key definitions */
@@ -156,12 +156,12 @@ static Key keys[] = {
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	/* { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} }, */
-	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
+	// { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	// { ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	// { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkStatusText,        0,              Button1,        sigstatusbar,   {.i = 1} },
-	{ ClkStatusText,        0,              Button2,        sigstatusbar,   {.i = 2} },
+	{ ClkStatusText,        0,              Button2 ,        sigstatusbar,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigstatusbar,   {.i = 3} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },

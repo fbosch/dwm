@@ -859,14 +859,14 @@ drawbar(Monitor *m)
 				ch = *s;
 				*s = '\0';
 				tw = TEXTW(text) - lrpad;
-				drw_text(drw, m->ww - statusw - stw + x, 0, tw, bh, 0, text, 0);
+				drw_text(drw, m->ww - statusw - stw - 10 + x, 0, tw + stw, bh, 0, text, 0);
 				x += tw;
 				*s = ch;
 				text = s + 1;
 			}
 		}
-		tw = TEXTW(text) - lrpad + 2;
-		drw_text(drw, m->ww - statusw - stw + x, 0, tw, bh, 0, text, 0);
+		tw = TEXTW(text) - lrpad;
+		drw_text(drw, m->ww - statusw - stw + x, 0, tw + stw, bh, -10, text, 0);
 		tw = statusw;
 	}
 
@@ -900,7 +900,7 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
 			drw_text(drw, x, 0, w, bh, mid + (m->sel->icon ? m->sel->icw + ICONSPACING : 0), m->sel->name, 0);
 			// drw_text(drw, x, 0, w, bh, mid, m->sel->name, 0);
-			if (m->sel->icon) drw_pic(drw, x + mid, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);			
+			if (m->sel->icon) drw_pic(drw, x + mid, (bh - m->sel->ich) / 2, m->sel->icw, m->sel->ich, m->sel->icon);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
 		} else {
@@ -2534,7 +2534,7 @@ updatestatus(void)
 {
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext))) {
 		strcpy(stext, "dwm-"VERSION);
-		statusw = TEXTW(stext) - lrpad + 2;
+		statusw = TEXTW(stext) - lrpad + 10;
 	} else {
 		char *text, *s, ch;
 
@@ -2548,7 +2548,7 @@ updatestatus(void)
 				text = s + 1;
 			}
 		}
-		statusw += TEXTW(text) - lrpad + 2;
+		statusw += TEXTW(text) - lrpad;
 
 	}
 	drawbar(selmon);
@@ -2559,21 +2559,21 @@ void
 updatesystrayicongeom(Client *i, int w, int h)
 {
 	if (i) {
-		i->h = bh;
+		i->h = bh - vertpadbar;
 		if (w == h)
-			i->w = bh;
-		else if (h == bh)
+			i->w = bh - vertpadbar;
+		else if (h == bh - vertpadbar)
 			i->w = w;
 		else
-			i->w = (int) ((float)bh * ((float)w / (float)h));
+			i->w = (int) (((float)bh - ((float)vertpadbar / 2)) * ((float)w / (float)h));
 		applysizehints(i, &(i->x), &(i->y), &(i->w), &(i->h), False);
 		/* force icons into the systray dimensions if they don't want to */
-		if (i->h > bh) {
+		if (i->h > bh - vertpadbar) {
 			if (i->w == i->h)
-				i->w = bh;
+				i->w = bh - vertpadbar;
 			else
 				i->w = (int) ((float)bh * ((float)i->w / (float)i->h));
-			i->h = bh;
+			i->h = bh - vertpadbar;
 		}
 	}
 }
@@ -2653,7 +2653,7 @@ updatesystray(void)
 		XMapRaised(dpy, i->win);
 		w += systrayspacing;
 		i->x = w;
-		XMoveResizeWindow(dpy, i->win, i->x, 0, i->w, i->h);
+		XMoveResizeWindow(dpy, i->win, i->x, (vertpadbar / 2), i->w, i->h);
 		w += i->w;
 		if (i->mon != m)
 			i->mon = m;
