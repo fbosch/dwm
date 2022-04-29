@@ -24,22 +24,23 @@ static const int horizpadbar        = 15;        			/* horizontal padding for st
 static const int vertpadbar         = 11;        			/* vertical padding for statusbar */
 static const char *fonts[]          = {  "SF Mono:size=12:style=regular", "Symbols Nerd Font Mono:size=13", "Noto Sans Runic:size=14" };
 static const char dmenufont[]       = "SF Mono:size=12";
-static const char col_gray1[]       = "#161616";
-static const char col_gray2[]       = "#3B3A43";
-static const char col_gray3[]       = "#49494A";
-static const char col_gray4[]       = "#909999";
-static const char col_cyan[]        = "#292929";
-static const char col_white[]				= "#ffffff";
+static const char col_gray1[]       = "#191919";
+static const char col_gray2[]       = "#404040";
+static const char col_gray3[]       = "#303030";
+static const char col_gray4[]       = "#555555";
+static const char col_cyan[]        = "#303030";
+static const char col_white[]				= "#FFFFFF";
+static const char col_active[]      = "#BBBBBB";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray4, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_white, col_cyan,  col_gray3  },
+	[SchemeSel]  = { col_white, col_cyan,  col_active },
 };
 
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* tagging */
-static const char *tags[] = { "  " , " ²  ", " ³  ", " ⁴  ", " ⁵  ", " ⁶  ", " ⁷  ", " ⁷ "};
+static const char *tags[] = { "  " , "  爵² ", "  ³ ", "  ⁴ ", "  ⁵ ", "  ⁶ ", "  ⁷ ", "  漣⁸ "};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -57,6 +58,8 @@ static const Rule rules[] = {
 	{ "Bitwarden", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "Lampe", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "Plexamp", 	  	NULL,       NULL,       0,       			1,           -1 },
+	{ "Blueman-manager", 	  	NULL,       NULL,       0,       			1,           -1 },
+	{ "Pavucontrol", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "Conky-manager", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "Steam", 	  	NULL,       NULL,     1 << 4,       			1,           -1 },
 	{ "Minecraft Launcher", 	  	NULL,       NULL,     1 << 4,       			1,           0 },
@@ -64,7 +67,6 @@ static const Rule rules[] = {
 	{ "Minecraft", 	  	NULL,       NULL,     1 << 3,       			0,           0 },
 	{ "Sxiv", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "inkdrop", 	  	NULL,       NULL,       0,       			1,           -1 },
-	{ "Sysmontask", 	  	NULL,       NULL,       0,       			1,           -1 },
 	{ "plexmediaplayer", 	  	NULL,       NULL,     ~0,       			1,           0 },
 	{ "Brave",    NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "code-oss", NULL,       NULL,       1 << 2,       0,           -1 },
